@@ -166,8 +166,9 @@ def _impl(ctx):
     elif ctx.attr.cpu == "darwin":
         linker_flags = [
             # Difficult to guess options to statically link C++ libraries with the macOS linker.
-            "-lc++",
-            "-lc++abi",
+            "-L%{toolchain_path_prefix}/lib",
+            "-lc++-static",
+            "-lc++abi-static",
             "-headerpad_max_install_names",
             "-undefined",
             "dynamic_lookup",
