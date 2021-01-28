@@ -166,9 +166,6 @@ def _impl(ctx):
     elif ctx.attr.cpu == "darwin":
         linker_flags = [
             # Difficult to guess options to statically link C++ libraries with the macOS linker.
-            "-L%{toolchain_path_prefix}/lib",
-            "-lc++-static",
-            "-lc++abi-static",
             "-headerpad_max_install_names",
             "-undefined",
             "dynamic_lookup",
@@ -229,7 +226,42 @@ def _impl(ctx):
                 flag_groups = [flag_group(flags = ["-Wl,--gc-sections"])],
                 with_features = [with_feature_set(features = ["opt"])],
             ),
-        ] if ctx.attr.cpu == "k8" else []),
+        ] if ctx.attr.cpu == "k8" else []) + ([
+            flag_set(
+                actions = all_link_actions,
+                flag_groups = [
+                    flag_group(
+                        flags = [
+                            "-L%{toolchain_path_prefix}/lib",
+                            "-lc++-static",
+                            "-lc++abi-static",
+                            "foobers",
+                        ],
+                    ),
+                ],
+                with_features = [
+                    with_feature_set(
+                        features = [
+                            "fully_static_link",
+                            "static_linking_mode",
+                            "static_linking_mode_nodeps_library",
+                        ],
+                    ),
+                ],
+            ),
+            flag_set(
+                actions = all_link_actions,
+                flag_groups = [
+                    flag_group(
+                        flags = [
+                            "-lc++",
+                            "-lc++abi",
+                        ],
+                    ),
+                ],
+                with_features = [with_feature_set(features = ["dynamic_linking_mode"])],
+            ),
+        ] if ctx.attr.cpu == "darwin" else []),
     )
 
     default_compile_flags_feature = feature(
