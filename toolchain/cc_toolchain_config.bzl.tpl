@@ -238,13 +238,9 @@ def _impl(ctx):
                     ),
                 ],
                 with_features = [
-                    with_feature_set(
-                        features = [
-                            "fully_static_link",
-                            "static_linking_mode",
-                            "static_linking_mode_nodeps_library",
-                        ],
-                    ),
+                    with_feature_set(features = ["fully_static_link"]),
+                    with_feature_set(features = ["static_linking_mode"]),
+                    with_feature_set(features = ["static_linking_mode_nodeps_library"]),
                 ],
             ),
             flag_set(
