@@ -235,7 +235,6 @@ def _impl(ctx):
                             "-L%{toolchain_path_prefix}/lib",
                             "-lc++-static",
                             "-lc++abi-static",
-                            "foobers",
                         ],
                     ),
                 ],
