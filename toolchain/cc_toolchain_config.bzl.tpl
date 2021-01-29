@@ -180,6 +180,12 @@ def _impl(ctx):
     supports_pic_feature = feature(name = "supports_pic", enabled = True)
     supports_dynamic_linker_feature = feature(name = "supports_dynamic_linker", enabled = True)
 
+    fully_static_link_feature = feature(name = "fully_static_link")
+    static_linking_mode_feature = feature(name = "static_linking_mode")
+    static_linking_mode_nodeps_library_feature = feature(name = "static_linking_mode_nodeps_library")
+    static_link_cpp_runtimes_feature = feature(name = "static_link_cpp_runtimes")
+    dynamic_linking_mode_feature = feature(name = "dynamic_linking_mode")
+
     unfiltered_compile_flags_feature = feature(
         name = "unfiltered_compile_flags",
         enabled = True,
@@ -238,9 +244,9 @@ def _impl(ctx):
                     ),
                 ],
                 with_features = [
-                    with_feature_set(features = ["fully_static_link"]),
                     with_feature_set(features = ["static_linking_mode"]),
-                    with_feature_set(features = ["static_linking_mode_nodeps_library"]),
+                    with_feature_set(features = ["static_link_cpp_runtimes"]),
+                    with_feature_set(features = ["fully_static_link"]),
                 ],
             ),
             flag_set(
@@ -253,7 +259,11 @@ def _impl(ctx):
                         ],
                     ),
                 ],
-                with_features = [with_feature_set(features = ["dynamic_linking_mode"])],
+                with_features = [
+                    with_feature_set(
+                        features = ["dynamic_linking_mode"],
+                    ),
+                ],
             ),
         ] if ctx.attr.cpu == "darwin" else []),
     )
@@ -516,6 +526,11 @@ def _impl(ctx):
         user_compile_flags_feature,
         sysroot_feature,
         coverage_feature,
+        fully_static_link_feature,
+        static_linking_mode_feature,
+        static_linking_mode_nodeps_library_feature,
+        static_link_cpp_runtimes_feature,
+        dynamic_linking_mode_feature,
         # Windows only features.
         # input_paths_feature
         # dependency_file_feature
