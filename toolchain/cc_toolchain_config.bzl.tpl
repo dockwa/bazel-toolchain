@@ -165,10 +165,7 @@ def _impl(ctx):
         ]
     elif ctx.attr.cpu == "darwin":
         linker_flags = [
-            # Difficult to guess options to statically link C++ libraries with the macOS linker.
             "-headerpad_max_install_names",
-            "-undefined",
-            "dynamic_lookup",
         ]
     else:
         fail("Unreachable")
@@ -255,6 +252,8 @@ def _impl(ctx):
                         flags = [
                             "-lc++",
                             "-lc++abi",
+                            "-undefined",
+                            "dynamic_lookup",
                         ],
                     ),
                 ],
