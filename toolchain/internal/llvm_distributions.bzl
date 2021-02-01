@@ -181,7 +181,7 @@ def download_llvm_preconfigured(rctx):
         "{0}{1}".format(_llvm_distributions_base_url[llvm_version], url_suffix),
     ]
     urls += [
-        "{0}/{1}".format(base, url_suffix)
+        "{0}{1}".format(base, url_suffix)
         for base in mirror_base
     ]
 
