@@ -138,6 +138,8 @@ filegroup(
             ],
             exclude = [
                 "lib/libLLVM*.a",
+                "lib/libMLIR*.a"
+                "lib/libPolly*.a",
                 "lib/libclang*.a",
                 "lib/liblld*.a",
             ],
