@@ -121,18 +121,29 @@ filegroup(
 )
 
 filegroup(
-    name = "lib",
+    name = "clang_runtime_lib"
     srcs = glob(
         [
-            "lib/lib*.a",
-            "lib/clang/%{llvm_version}/lib/**/*.a",
-        ],
-        exclude = [
-            "lib/libLLVM*.a",
-            "lib/libclang*.a",
-            "lib/liblld*.a",
-        ],
+            "lib/clang/%{llvm_version/lib/**/*.a",
+        },
     ),
+)
+
+filegroup(
+    name = "lib",
+    srcs = [
+        glob(
+            [
+                "lib/lib*.a",
+            ],
+            exclude = [
+                "lib/libLLVM*.a",
+                "lib/libclang*.a",
+                "lib/liblld*.a",
+            ],
+        ),
+        ":clang_runtime_lib",
+   )
 )
 
 filegroup(
